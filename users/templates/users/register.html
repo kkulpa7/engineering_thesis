@@ -1,0 +1,44 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="text-center mb-4"></div>
+<div class="container" style="width: 30rem;">
+  <div class="jumbotron">
+    <form action="{% url 'register' %}" method="POST">
+      {% csrf_token %}
+
+      <div class="mb-5 text-center">
+        <h2>Rejestracja</h2>
+      </div>
+
+      <div class="text-center mb-3">
+        <p>Zarejestruj się przez:</p>
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="bi bi-facebook"></i>
+        </button>
+
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="bi bi-google"></i>
+        </button>
+
+        <button type="button" class="btn btn-link btn-floating mx-1">
+          <i class="bi bi-twitter"></i>
+        </button>
+      </div>
+
+      <p class="text-center">lub:</p>
+      {% for field in form %}
+      <div class="mb-3">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field }}
+      </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary btn-block mb-3">Zarejestruj mnie</button>
+    </form>
+    <div class="text-center mb-5">
+      <p>Masz już utworzone konto? <a href="{% url 'login' %}">Zaloguj się</a></p>
+    </div>
+  </div>
+</div>
+{% endblock content %}

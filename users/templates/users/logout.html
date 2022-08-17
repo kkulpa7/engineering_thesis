@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="text-center mb-4"></div>
+<div class="container" style="width: 40rem;">
+  <div class="jumbotron">
+    <div class="mb-4 text-center">
+      <h5>Czy jesteś pewien, że chcesz się wylogować?</h5>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm text-center">
+          <a href="{% url 'logout' %}">
+            <button type="submit" class="btn btn-primary btn-block">
+              Wyloguj mnie
+            </button>
+          </a>
+        </div>
+        <div class="col-sm text-center">
+          <a href="{% url 'posts' %}">
+            <button type="submit" class="btn btn-secondary btn-block">
+              Anuluj
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<img src="{{post.image.url}}" alt="">
+<p>{{post.title}}</p>
+{% for tag in post.tags.all %}
+<p>{{tag}}</p>
+{% endfor %}
+
+{% endblock content %}
