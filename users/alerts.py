@@ -1,0 +1,5 @@
+logoutSuccess = 'Użytkownik został wylogowany'
+registerSuccess = 'Konto zostało utworzone!'
+registerError = 'Nie udało się utworzyć nowego konta!'
+loginSuccess = 'Udało się zalogować!'
+loginError = 'Login lub hasło jest nieprawidłowe!'

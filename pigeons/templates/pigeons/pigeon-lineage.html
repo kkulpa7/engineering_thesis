@@ -1,0 +1,120 @@
+{% extends 'main.html' %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <div class="col-md">
+        <div class="card text-center mb-3">
+          <div class="card-header">
+            <a class="nav-item nav-link" href="{% url 'pigeon' pigeon.id %}"><h5 class="card-title">{{pigeon.number}}</h5></a>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <div class="col-md">
+                  <div class="card text-center mb-3">
+                    <div class="card-header">
+                      <h5 class="card-title">{{pigeon.mother.number}}</h5>
+                    </div>
+                    <div class="card-body">
+                      <p>TODO</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="col-md">
+                  <div class="card text-center mb-3">
+                    <div class="card-header">
+                      <h5 class="card-title">{{pigeon.father.number}}</h5>
+                    </div>
+                    <div class="card-body">
+                      <p>TODO</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="col-md">
+        <div class="card text-center mb-3">
+          <div class="card-header">
+            <h5 class="card-title">{{pigeon.mother.number}}</h5>
+          </div>
+          <div class="card-body">
+            <p>TODO</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-md">
+        <div class="card text-center mb-3">
+          <div class="card-header">
+            <h5 class="card-title">{{pigeon.father.number}}</h5>
+          </div>
+          <div class="card-body">
+            <p>TODO</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="col-md">
+        <div class="card text-center mb-3">
+          <div class="card-header">
+            <h5 class="card-title">{{pigeon.mother.mother.number}}</h5>
+          </div>
+          <div class="card-body">
+            <p>TODO</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-md">
+        <div class="card text-center mb-3">
+          <div class="card-header">
+            <h5 class="card-title">{{pigeon.mother.father.number}}</h5>
+          </div>
+          <div class="card-body">
+            <p>TODO</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-md">
+        <div class="card text-center mb-3">
+          <div class="card-header">
+            <h5 class="card-title">{{pigeon.father.mother.number}}</h5>
+          </div>
+          <div class="card-body">
+            <p>TODO</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="col-md">
+        <div class="card text-center mb-3">
+          <div class="card-header">
+            <h5 class="card-title">{{pigeon.father.father.number}}</h5>
+          </div>
+          <div class="card-body">
+            <p>TODO</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

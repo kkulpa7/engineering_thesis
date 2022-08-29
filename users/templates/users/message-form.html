@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container p-5">
+  <div class="jumbotron mb-0">
+    <h1 class="text-center">Wysyłanie wiadomości</h1>
+    <a href="{% url 'profile' receiver.id %}"><button type="button" class="btn btn-secondary mb-3">« Powrót</button></a>
+
+    <form class="form" method="POST">
+      {% csrf_token %}
+      {% if request.user.is_authenticated == False %}
+      <div class="mb-3">
+        <label class="form-label">{{ form.sender_2.label }}</label>
+        {{ form.sender_2 }}
+      </div>
+      {% endif %}
+      <div class="mb-3">
+        <label class="form-label">{{ form.subject.label }}</label>
+        {{ form.subject }}
+      </div>
+      <div class="mb-3">
+        <label class="form-label">{{ form.text.label }}</label>
+        {{ form.text }}
+      </div>
+      <button type="submit" class="btn btn-primary btn-block mb-3">Wyślij</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

@@ -19,12 +19,14 @@
     <div class="navbar-nav">
 
       <!-- the span class "sr-only" tells screen readers that Home is the active link, for accessibility -->
-      <a class="nav-item nav-link active" href="{% url 'posts' %}">Posty <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="#">Link1</a>
-      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+
+      <!-- <a class="nav-item nav-link active" href="{% url 'posts' %}">Posty <span class="sr-only">(current)</span></a> -->
+      <a class="nav-item nav-link" href="{% url 'posts' %}">Posty</a>
+      <a class="nav-item nav-link" href="{% url 'profiles' %}">Użytkownicy</a>
+      <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
 
       <!-- DROPDOWN MENU -->
-      <div class="nav-item dropdown">
+      <!-- <div class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbar-dropdown-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Dropdown
         </a>
@@ -33,34 +35,37 @@
           <a class="dropdown-item" href="http://www.google.com">Go to Google</a>
           <a class="dropdown-item" href="#">Something else here</a>
 
-          <!-- Use this to separate a new link: -->
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Separated link</a>
         </div>
-      </div>
+      </div> -->
 
     </div> <!-- /.navbar-nav, left-hand content -->
 
     <div class="navbar-nav ml-auto">
       {% if request.user.is_authenticated %}
+
       <div class="nav-item dropdown">
-        <div class="nav-item dropdown">
-          <a class="nav-item nav-link navbar-brand" id="navbar-dropdown-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="bi bi-plus-lg"></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-menu">
-            <a class="dropdown-item" href="{% url 'create-post' %}">Dodaj post</a>
-          </div>
+        <a class="nav-item nav-link navbar-brand" id="navbar-dropdown-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="bi bi-plus-lg"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-menu">
+          <a class="dropdown-item" href="{% url 'create-pigeon' %}">Dodaj gołębia</a>
+          <a class="dropdown-item" href="{% url 'create-post' %}">Dodaj post</a>
         </div>
       </div>
+
+      <a class="nav-item nav-link navbar-brand" href="{% url 'messages-view' %}">
+        <i class="bi bi-chat"></i></a>
 
       <div class="nav-item dropdown">
         <a class="nav-item nav-link navbar-brand" id="navbar-dropdown-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="bi bi-person-circle"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-menu">
-          <a class="dropdown-item" href="#">Moje konto</a>
-          <a class="dropdown-item" href="#">Moje posty</a>
+          <a class="dropdown-item" href="{% url 'user-profile' %}">Moje konto</a>
+          <a class="dropdown-item" href="{% url 'user-pigeons' %}">Moje gołębie</a>
+          <a class="dropdown-item" href="{% url 'user-posts' %}">Moje posty</a>
 
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'edit-profile' %}">Edytuj profil</a>

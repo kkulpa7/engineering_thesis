@@ -2,4 +2,11 @@
 
 {% block content %}
 
-{% endblock contant %}
+<!-- TODO:  -->
+<img src="{{profile.profile_image.url}}" alt="">
+<p>{{profile.first_name}}</p>
+<p>{{profile.last_name}}</p>
+{% if request.user.profile.id != profile.id %}
+<a href="{% url 'create-message' profile.id %}">Wyślij wiadmość</a>
+{% endif %}
+{% endblock content %}

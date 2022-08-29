@@ -1,19 +1,16 @@
 {% extends 'main.html' %}
 
 {% block content %}
-
-<div class="text-center mb-4"></div>
-
-<div class="container">
-  <div class="jumbotron">
+<div class="container p-5">
+  <div class="jumbotron mb-0">
     <form method="POST" enctype='multipart/form-data'>
       {% csrf_token %}
 
       <div class="mb-5 text-center">
         {% if type == 0 %}
-        <h2>Dodawanie posta</h2>
+        <h2>Dodawanie gołębia</h2>
         {% else %}
-        <h2>Edytowanie posta</h2>
+        <h2>Edytowanie gołębia</h2>
         {% endif %}
       </div>
 
@@ -24,9 +21,8 @@
       </div>
       {% endfor %}
 
-      <button type="submit" class="btn btn-primary btn-block mb-3">Zapisz post</button>
+      <button type="submit" class="btn btn-primary btn-block mb-3">Zapisz</button>
     </form>
   </div>
 </div>
-
 {% endblock content %}

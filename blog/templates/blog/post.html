@@ -1,10 +1,14 @@
 {% extends 'main.html' %}
 {% block content %}
-
+TODO
+{% if post.image %}
 <img src="{{post.image.url}}" alt="">
+{% endif %}
 <p>{{post.title}}</p>
 {% for tag in post.tags.all %}
 <p>{{tag}}</p>
 {% endfor %}
+<a href="{% url 'update-post' post.id %}">Update</a>
+<a href="{% url 'delete-post' post.id %}">Delete</a>
 
 {% endblock content %}

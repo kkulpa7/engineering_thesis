@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="mb-4"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="tab-content">
+          <div class="tab-pane fade active show" aria-labelledby="inbox-tab" role="tabpanel">
+            <div class="p-4 text-center bg-secondary">
+              <h3 class="mb-0 text-white">
+                {% if unread_count == 1 %}
+                {{unread_count}} nieprzeczytana wiadomość
+                {% elif unread_count == 0 %}
+                Brak nieprzeczytanych wiadomości
+                {% else %}
+                {{unread_count}} nieprzeczytanych wiadomości
+                {% endif %}
+              </h3>
+            </div>
+            <!-- Mail list-->
+            <div class="table-responsive">
+              <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                <tbody>
+                  {% for message in messages_obj %}
+                  {% if message.is_read == False %}
+                  <tr class="font-weight-bold">
+                    {% else %}
+                  <tr>
+                    {% endif %}
+                    <td>
+                      <span class="mb-0 text-muted">{{message.sender_2}}</span>
+                    </td>
+                    <td>
+                      <span class="text-dark">{{message.subject}}</span>
+                    </td>
+                    <td class="text-muted">{{message.created|date:'d-m-Y h:m'}}</td>
+                    <td>
+                      <a href="{% url 'message-view' message.id %}">
+                        <button type="button" class="btn btn-secondary btn-sm">Przeczytaj</button>
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="mb-4"></div>
+{% endblock content %}

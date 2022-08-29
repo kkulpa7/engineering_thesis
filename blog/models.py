@@ -23,11 +23,19 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey('blog.Post', related_name='comments', on_delete=models.CASCADE)
-    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True)
+    VOTE_TYPE = (
+        ('up', 'pozytywny'),
+        ('down', 'negatywny')
+    )
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
     text = models.TextField()
+    value = models.CharField(max_length=5, choices=VOTE_TYPE)
     created = models.DateTimeField(default=timezone.now)
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
+    class Meta:
+        unique_together = [['author', 'post']]
 
     def __str__(self):
         return self.text

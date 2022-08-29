@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% block content %}
+<div class="text-center mb-4"></div>
+
+<div class="container">
+  <div class="jumbotron">
+    <div class="text-center mb-4">
+      <h2>Numer obrączki: {{pigeon.number}}</h2>
+    </div>
+    <div class="row">
+
+      {% if pigeon.image_body %}
+      <div class="col">
+        <div class="card text-center">
+          <img src="{{pigeon.image_body.url}}" alt="" class="img-thumbnail">
+        </div>
+      </div>
+      {% endif %}
+      {% if pigeon.image_wing %}
+      <div class="col">
+        <div class="card text-center">
+          <img src="{{pigeon.image_wing.url}}" alt="" class="img-thumbnail">
+        </div>
+      </div>
+      {% endif %}
+      {% if pigeon.image_eye %}
+      <div class="col">
+        <div class="card text-center">
+          <img src="{{pigeon.image_eye.url}}" alt="" class="img-thumbnail">
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <a class="btn btn-sm btn-danger" href="{% url 'pigeon-lineage' pigeon.id %}">Rodowód</a>
+</div>
+{% endblock %}
