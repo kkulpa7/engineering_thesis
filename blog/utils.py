@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post
 
 
-def searchPosts(request, user=False):
+def searchPosts(request, user=False, tag=False):
     search_query = ''
 
     if request.GET.get('search_query'):
@@ -18,6 +18,12 @@ def searchPosts(request, user=False):
             (Q(title__icontains=search_query) |
             Q(text__icontains=search_query))
         )
+    elif tag:
+        posts = Post.objects.distinct().filter(
+            Q(tags=tag) &
+            (Q(title__icontains=search_query) |
+            Q(text__icontains=search_query))
+            )
     else:
         posts = Post.objects.distinct().filter(
             Q(title__icontains=search_query) |

@@ -1,11 +1,8 @@
 {% extends 'main.html' %}
-
 {% block content %}
 
-<div class="text-center mb-4"></div>
-
-<div class="container">
-  <div class="jumbotron">
+<div class="container p-5">
+  <div class="jumbotron mb-0">
     <form method="POST" enctype='multipart/form-data'>
       {% csrf_token %}
 

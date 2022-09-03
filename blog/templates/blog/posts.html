@@ -1,9 +1,7 @@
 {% extends 'main.html' %}
 {% block content %}
 
-<div class="text-center mb-3"></div>
-
-<form class="form" action="{% url 'posts' %}" method="GET" id="searchForm">
+<form class="form p-3" action="{% url 'posts' %}" method="GET" id="searchForm">
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container" style="width: 30rem;">
       <div class="input-group rounded">
@@ -18,8 +16,7 @@
   </nav>
 </form>
 
-<div class=" container p-3">
-
+<div class="container">
   <p>Popularne tagi:
   {% for tag in common_tags %}
       <a href="{% url 'tagged' tag.slug %}" class="badge badge-success">{{tag}}</a>
@@ -44,10 +41,5 @@
   </div>
 </div>
 
-<div class="text-center mb-3"></div>
-
 {% include 'pagination.html' with queryset=posts %}
-
-<div class="text-center mb-3"></div>
-
 {% endblock content %}

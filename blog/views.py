@@ -12,14 +12,18 @@ from taggit.models import Tag
 # Create your views here.
 def tagged(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
-    posts = Post.objects.filter(tags=tag)
+    posts, search_query = searchPosts(request, tag=tag)
+    custom_rage, posts = paginatePosts(request, posts, 6)
+
     common_tags = Post.tags.most_common()[:4]
     context = {
         'tag': tag,
         'posts': posts,
         'common_tags': common_tags,
+        'search_query': search_query,
+        'custom_rage': custom_rage,
     }
-    return render(request, 'blog/posts.html', context)
+    return render(request, 'blog/tag-posts.html', context)
 
 
 def posts(request):
@@ -66,11 +70,13 @@ def post(request, pk):
 def userPosts(request):
     posts, search_query = searchPosts(request, user=True)
     custom_rage, posts = paginatePosts(request, posts, 3)
+    common_tags = Post.tags.most_common()[:4]
 
     context = {
         'posts': posts,
         'search_query': search_query,
-        'custom_rage': custom_rage
+        'custom_rage': custom_rage,
+        'common_tags': common_tags,
     }
     return render(request, 'blog/user-posts.html', context)
 
