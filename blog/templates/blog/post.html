@@ -1,14 +1,78 @@
 {% extends 'main.html' %}
 {% block content %}
-TODO
-{% if post.image %}
-<img src="{{post.image.url}}" alt="">
-{% endif %}
-<p>{{post.title}}</p>
-{% for tag in post.tags.all %}
-<p>{{tag}}</p>
-{% endfor %}
-<a href="{% url 'update-post' post.id %}">Update</a>
-<a href="{% url 'delete-post' post.id %}">Delete</a>
 
+<div class="container p-5">
+  <div class="jumbotron p-3 mb-0">
+    <h2 class="text-center">{{post.title}}</h2>
+    <a href="{% url 'profile' post.author.id %}">
+      <h4>{{post.author.user.first_name}} {{post.author.user.last_name}}</h4>
+    </a>
+    <p class="text-muted mb-0">{{post.created|date:'d-m-Y H:m'}}</p>
+    {% for tag in post.tags.all %}
+    <a href="{% url 'tagged' tag.slug %}" class="mr-1 badge badge-info mb-0">#{{tag}}</a>
+    {% endfor %}
+    <div class="mb-3"></div>
+    <h5 class="mb-5">{{post.text}}</h5>
+
+    {% if post.author == request.user.profile %}
+    <div class="text-right">
+      <a href="{% url 'update-post' post.id %}"><button type="button" class="btn btn-primary">Edytuj</button></a>
+      <a href="{% url 'delete-post' post.id %}"><button type="button" class="btn btn-danger">Usuń</button></a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<hr>
+
+{% if request.user.profile.id in post.commentators %}
+<p class="text-center">Dodałeś już komentarz do postu.</p>
+{% elif request.user.profile == post.author %}
+<p class="text-center">Nie możesz skomentować swojego postu.</p>
+{% elif request.user.is_authenticated %}
+<div class="container p-5">
+  <h3 class="mb-3 text-center">Dodaj komentarz</h3>
+  <div class="jumbotron mb-0 p-3">
+    <form class="form" action="{% url 'post' post.id %}" method="POST">
+      {% csrf_token %}
+      {% for field in form %}
+      <div class="mb-3">
+        <label class="form-label">{{field.label}}</label>
+        {{field}}
+      </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary btn-block mb-3">Opublikuj komentarz</button>
+    </form>
+  </div>
+</div>
+{% else %}
+<p class="text-center">Aby skomentować post <a href="{% url 'login' %}?next={{request.path}}">zaloguj się</a>.</p>
+{% endif %}
+<hr>
+
+<div class="container p-5 text-center">
+  <div class="mb-3">
+    {% if post.vote_total == 0 %}
+    <h3>Brak komentarzy</h3>
+    {% elif post.vote_total == 1 %}
+    <h3>1 komentarz</h3>
+    {% elif post.vote_total <= 4 %}
+    <h3>{{post.vote_total}} komentarze</h3>
+    {% else %}
+    <h3>{{post.vote_total}} komentarzy</h3>
+    {% endif %}
+
+    {% if post.vote_total != 0 %}
+    {{post.vote_ratio}}% pozytywnych komentarzy
+    {% endif %}
+  </div>
+
+  {% for comment in comments %}
+  <div class="card text-left mb-3">
+    <div class="media-body p-2">
+      <h5 class="mt-0 font400 clearfix">{{comment.author.user.first_name}} {{comment.author.user.last_name}}</h5>
+      <p>{{comment.text}}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock content %}

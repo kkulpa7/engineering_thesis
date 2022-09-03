@@ -35,7 +35,7 @@
                     <td>
                       <span class="text-dark">{{message.subject}}</span>
                     </td>
-                    <td class="text-muted">{{message.created|date:'d-m-Y h:m'}}</td>
+                    <td class="text-muted">{{message.created|date:'d-m-Y H:m'}}</td>
                     <td>
                       <a href="{% url 'message-view' message.id %}">
                         <button type="button" class="btn btn-secondary btn-sm">Przeczytaj</button>

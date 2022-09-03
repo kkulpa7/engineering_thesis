@@ -1,4 +1,6 @@
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
+from taggit.models import Tag
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post
 

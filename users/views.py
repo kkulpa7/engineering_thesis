@@ -54,7 +54,7 @@ def userLogin(request):
         return redirect('posts')
 
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['username'].lower()
         password = request.POST['password']
 
         user = authenticate(request, username=username, password=password)
@@ -62,7 +62,7 @@ def userLogin(request):
         if user is not None:
             login(request, user)
             messages.success(request, loginSuccess)
-            return redirect('posts')
+            return redirect(request.GET['next'] if 'next' in request.GET else 'posts')
         else:
             messages.error(request, loginError)
 
