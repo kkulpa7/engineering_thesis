@@ -19,7 +19,7 @@
 <div class="container">
   <p>Popularne tagi:
   {% for tag in common_tags %}
-      <a href="{% url 'tagged' tag.slug %}" class="badge badge-success">{{tag}}</a>
+      <a href="{% url 'tagged' tag.slug %}" class="badge badge-success">#{{tag}}</a>
   {% endfor %}
   </p>
 </div>

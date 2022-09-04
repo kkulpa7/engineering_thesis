@@ -97,7 +97,7 @@ def createPost(request):
 
             messages.success(request, 'Udało się dodać post!')
 
-            return redirect('posts')
+            return redirect('post', pk=post.id)
 
     context = {
         'form': form,
@@ -117,7 +117,7 @@ def updatePost(request, pk):
         if form.is_valid():
             form.save()
             messages.success(request, 'Udało się edytować post ' + post.title + '!')
-            return redirect('posts')
+            return redirect('post', pk=post.id)
 
     context = {
         'form': form,
