@@ -71,9 +71,11 @@ class ProfileForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
-        # self.fields['title'].widget.attrs.update({'placeholder': 'Dodaj tytuł'})
+
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'input'})
+            field.widget.attrs.update({'class': 'form-control'})
+            field.widget.attrs.update({'placeholder': field.label})
+
 
 
 class MessageForm(ModelForm):

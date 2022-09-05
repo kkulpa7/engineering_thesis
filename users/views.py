@@ -10,8 +10,6 @@ from .utils import searchProfiles, paginateProfiles
 
 # Create your views here.
 def profiles(request):
-    # profiles = Profile.objects.all()
-    # search_query = ''
     profiles, search_query = searchProfiles(request)
     custom_rage, profiles = paginateProfiles(request, profiles, 3)
 
@@ -26,26 +24,20 @@ def profile(request, pk):
 
 
 @login_required(login_url='login')
-def userProfile(request):
-    profile = request.user.profile
-
-    context = {'profile': profile}
-    return render(request, 'users/user-profile.html', context)
-
-
-@login_required(login_url='login')
 def editProfile(request):
     profile = request.user.profile
     form = ProfileForm(instance=profile)
 
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
 
-            return redirect('posts')
+            return redirect('profile', pk=profile.id)
 
-    context = {'form': form}
+    context = {
+        'form': form
+    }
     return render(request, 'users/profile-form.html', context)
 
 

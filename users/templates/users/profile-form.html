@@ -1,11 +1,25 @@
 {% extends 'main.html' %}
-
 {% block content %}
-<!-- TODO -->
-<form  method="POST" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{form.as_p}}
-  <input type="submit">
 
-</form>
+<div class="container p-5" style="max-width: 50rem;">
+  <div class="jumbotron mb-0">
+    <form method="POST" enctype='multipart/form-data'>
+      {% csrf_token %}
+
+      <div class="mb-5 text-center">
+        <h2>Edytowanie profilu</h2>
+      </div>
+
+      {% for field in form %}
+      <div class="mb-3">
+        <label class="form-label">{{ field.label }}</label>
+        {{ field }}
+      </div>
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary btn-block mb-3">Zapisz post</button>
+    </form>
+  </div>
+</div>
+
 {% endblock content %}

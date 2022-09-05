@@ -48,7 +48,7 @@
               <i class="bi bi-person-circle"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{% url 'user-profile' %}">Moje konto</a></li>
+              <li><a class="dropdown-item" href="{% url 'profile' request.user.profile.id %}">Moje konto</a></li>
               <li><a class="dropdown-item" href="{% url 'user-pigeons' %}">Moje gołębie</a></li>
               <li><a class="dropdown-item" href="{% url 'user-posts' %}">Moje posty</a></li>
               <li><hr class="dropdown-divider"></li>

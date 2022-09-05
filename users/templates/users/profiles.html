@@ -21,15 +21,17 @@
 <div class="container">
   <div class="row">
     {% for profile in profiles %}
-    <div class="col-md-4">
-      <center>
-        <img class="rounded-circle" src="{{ profile.profile_image.url }}" alt="" width="100" height="100">
-        <h2>{{profile.user.first_name}} {{profile.user.last_name}}</h2>
-        {% if profile.bio %}
-        <p>{{profile.bio|truncatechars:150}}</p>
-        {% endif %}
-        <p><a class="btn btn-secondary" href="{% url 'profile' profile.id %}" role="button">Zobacz szczegóły »</a></p>
-      </center>
+    <div class="col-md-4 mb-4">
+      <div class="jumbotron mb-0 p-3">
+        <center>
+          <img class="rounded-circle" src="{{ profile.profile_image.url }}" alt="" width="100" height="100">
+          <h2>{{profile.user.first_name}} {{profile.user.last_name}}</h2>
+          {% if profile.bio %}
+          <p>{{profile.bio|truncatechars:150}}</p>
+          {% endif %}
+          <p><a class="btn btn-secondary" href="{% url 'profile' profile.id %}" role="button">Zobacz szczegóły »</a></p>
+        </center>
+      </div>
     </div>
     {% endfor %}
   </div>
