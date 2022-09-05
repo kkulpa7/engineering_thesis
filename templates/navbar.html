@@ -1,83 +1,68 @@
 {% load static %}
-<!DOCTYPE html>
-<!-- DOCUMENTATION NAVBAR -->
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">MyPigeonHouse</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="{% url 'posts' %}">Posty</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="{% url 'profiles' %}">Użytkownicy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="{% url 'districts' %}">Oddziały PZHGP</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-item nav-link" href="#">Wyniki lotów</a>
+        </li>
+        {% endif %}
+      </ul>
 
-  <a class="navbar-brand" href="#">MyPigeonHouse</a>
+      <div class="navbar-nav ml-auto">
+        {% if request.user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-item nav-link navbar-brand" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-plus-lg"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'create-pigeon' %}">Dodaj gołębia</a></li>
+              <li><a class="dropdown-item" href="{% url 'create-post' %}">Dodaj post</a></li>
+            </ul>
+          </li>
 
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <!-- This is the actual code that creates the "hamburger icon" -->
-  <!-- The data-target grabs ids to put into the icon -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-controls="bs-example-navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+          <li class="nav-item">
+            <a class="nav-item nav-link navbar-brand" href="{% url 'messages-view' %}">
+              <i class="bi bi-chat"></i>
+            </a>
+          </li>
 
+          <li class="nav-item dropdown">
+            <a class="nav-item nav-link navbar-brand" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'user-profile' %}">Moje konto</a></li>
+              <li><a class="dropdown-item" href="{% url 'user-pigeons' %}">Moje gołębie</a></li>
+              <li><a class="dropdown-item" href="{% url 'user-posts' %}">Moje posty</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'edit-profile' %}">Edytuj profil</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'logout-page' %}">Wyloguj mnie</a></li>
+            </ul>
+          </li>
+        </ul>
 
-  <!-- Anything inside of collapse navbar-collapse goes into the "hamburger" -->
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <div class="navbar-nav">
-
-      <!-- the span class "sr-only" tells screen readers that Home is the active link, for accessibility -->
-
-      <!-- <a class="nav-item nav-link active" href="{% url 'posts' %}">Posty <span class="sr-only">(current)</span></a> -->
-      <a class="nav-item nav-link" href="{% url 'posts' %}">Posty</a>
-      <a class="nav-item nav-link" href="{% url 'profiles' %}">Użytkownicy</a>
-      <!-- <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
-
-      <!-- DROPDOWN MENU -->
-      <!-- <div class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbar-dropdown-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbar-dropdown-menu">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="http://www.google.com">Go to Google</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Separated link</a>
-        </div>
-      </div> -->
-
-    </div> <!-- /.navbar-nav, left-hand content -->
-
-    <div class="navbar-nav ml-auto">
-      {% if request.user.is_authenticated %}
-
-      <div class="nav-item dropdown">
-        <a class="nav-item nav-link navbar-brand" id="navbar-dropdown-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="bi bi-plus-lg"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-menu">
-          <a class="dropdown-item" href="{% url 'create-pigeon' %}">Dodaj gołębia</a>
-          <a class="dropdown-item" href="{% url 'create-post' %}">Dodaj post</a>
-        </div>
+        {% else %}
+        <a class="nav-item nav-link navbar-brand" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-left"></i></a>
+        {% endif %}
       </div>
-
-      <a class="nav-item nav-link navbar-brand" href="{% url 'messages-view' %}">
-        <i class="bi bi-chat"></i></a>
-
-      <div class="nav-item dropdown">
-        <a class="nav-item nav-link navbar-brand" id="navbar-dropdown-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="bi bi-person-circle"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-menu">
-          <a class="dropdown-item" href="{% url 'user-profile' %}">Moje konto</a>
-          <a class="dropdown-item" href="{% url 'user-pigeons' %}">Moje gołębie</a>
-          <a class="dropdown-item" href="{% url 'user-posts' %}">Moje posty</a>
-
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'edit-profile' %}">Edytuj profil</a>
-
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'logout-page' %}">Wyloguj mnie</a>
-        </div>
-      </div>
-      {% else %}
-      <a class="nav-item nav-link navbar-brand" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-left"></i></a>
-      {% endif %}
-    </div> <!-- /.navbar-nav, right-hand content -->
-
+    </div>
   </div>
 </nav>

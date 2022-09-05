@@ -82,6 +82,7 @@ def pigeonLineage(request, pk):
     context = {'pigeon': pigeon}
     return render(request, 'pigeons/pigeon-lineage.html', context)
 
+
 @login_required(login_url="login")
 def deletePigeon(request, pk):
     pigeon = Pigeon.objects.get(id=pk)

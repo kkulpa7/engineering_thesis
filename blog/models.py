@@ -16,8 +16,7 @@ class Post(models.Model):
     vote_ratio = models.IntegerField(default=0, null=True, blank=True)
     tags = TaggableManager(blank=True)
     created = models.DateTimeField(default=timezone.now)
-    # id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-
+    
     def __str__(self):
         return self.title
 

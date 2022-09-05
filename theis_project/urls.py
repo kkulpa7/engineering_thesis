@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('pigeons.urls')),
     path('', include('blog.urls')),
     path('', include('users.urls')),
+    path('', include('districts.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

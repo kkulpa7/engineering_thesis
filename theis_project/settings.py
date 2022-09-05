@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'competitions.apps.CompetitionsConfig',
+    'districts.apps.DistrictsConfig',
 
     'taggit',
 ]

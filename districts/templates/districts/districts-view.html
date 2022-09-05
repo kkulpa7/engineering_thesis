@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block content %}
+
+<div class="container p-5" style="max-width: 60rem;">
+  <div class="jumbotron mb-0">
+    <h1 class="text-center mb-3">Oddziały i okręgi PZHGP</h1>
+    <div class="accordion" id="accordionPanelsStayOpenExample">
+      {% for district in districts %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-heading{{district.id}}">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{district.id}}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{{district.id}}">
+            {{district.name}}
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapse{{district.id}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{district.id}}">
+          <div class="accordion-body">
+            {% for branch in branches %}
+            {% if branch.district == district %}
+            {% if branch.website %}
+            <a href="{{branch.website}}" class="link-dark">
+              <p>{{branch.name}}</p>
+            </a>
+            {% else %}
+            <p>{{branch.name}}</p>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor%}
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
