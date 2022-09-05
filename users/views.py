@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile, Message
-from .forms import RegisterUserForm, ProfileForm, MessageForm
+from .forms import RegisterUserForm, ProfileForm, MessageForm, ChangePasswordForm
 from .alerts import *
 from .utils import searchProfiles, paginateProfiles
 
@@ -103,7 +103,10 @@ def messagesView(request):
     profile = request.user.profile
     messages_obj = profile.messages.all()
     unread_count = messages_obj.filter(is_read=False).count()
-    context = {'messages_obj': messages_obj, 'unread_count': unread_count}
+    context = {
+        'messages_obj': messages_obj,
+        'unread_count': unread_count
+    }
     return render(request, 'users/messages-view.html', context)
 
 
@@ -114,7 +117,9 @@ def messageView(request, pk):
     if message.is_read == False:
         message.is_read = True
         message.save()
-    context = {'message': message}
+    context = {
+        'message': message
+    }
     return render(request, 'users/message-view.html', context)
 
 
@@ -143,5 +148,27 @@ def createMessage(request, pk):
             messages.success(request, 'Udało się wysłać wiadomość do ' + receiver.user.first_name + " " + receiver.user.last_name + ".")
 
             return redirect('profile', pk=receiver.id)
-    context = {'receiver': receiver, 'form': form}
+    context = {
+        'receiver': receiver,
+        'form': form
+    }
     return render(request, 'users/message-form.html', context)
+
+
+def changePassword(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, changePasswordSuccess)
+            return redirect('change-password')
+        else:
+            messages.error(request, changePasswordError)
+    else:
+        form = ChangePasswordForm(request.user)
+
+    context = {
+        'form': form
+    }
+    return render(request, 'users/change-password.html', context)

@@ -1,5 +1,5 @@
 from django.forms import ModelForm, widgets
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 
 from django import forms
@@ -51,6 +51,43 @@ class RegisterUserForm(UserCreationForm):
             field.widget.attrs.update({'placeholder': field.label})
 
         self.fields['username'].widget.attrs.update({'autofocus': False})
+
+
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label="Stare hasło",
+        strip=False,
+        widget=forms.PasswordInput,
+        # help_text=password_validation.password_validators_help_text_html(),
+        help_text=None,
+    )
+    new_password1 = forms.CharField(
+        label="Nowe hasło",
+        strip=False,
+        widget=forms.PasswordInput,
+        help_text=None,
+    )
+    new_password2 = forms.CharField(
+        label="Powtórz nowe hasło",
+        strip=False,
+        widget=forms.PasswordInput,
+        help_text=None,
+    )
+
+    class Meta:
+        model = User
+        fields = [
+            'old_password',
+            'new_password1',
+            'new_password2',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+            field.widget.attrs.update({'placeholder': field.label})
 
 
 class ProfileForm(ModelForm):

@@ -13,4 +13,5 @@ urlpatterns = [
     path('messages-view/', views.messagesView, name="messages-view"),
     path('message-view/<str:pk>/', views.messageView, name="message-view"),
     path('create-message/<str:pk>/', views.createMessage, name="create-message"),
+    path('change-password/', views.changePassword, name="change-password"),
 ]
