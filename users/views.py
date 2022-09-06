@@ -13,27 +13,44 @@ def profiles(request):
     profiles, search_query = searchProfiles(request)
     custom_rage, profiles = paginateProfiles(request, profiles, 3)
 
-    context = {'profiles': profiles, 'search_query': search_query, 'custom_rage': custom_rage}
+    context = {
+        'profiles': profiles,
+        'search_query': search_query,
+        'custom_rage': custom_rage
+    }
     return render(request, 'users/profiles.html', context)
 
 
 def profile(request, pk):
     profile = Profile.objects.get(id=pk)
-    context = {'profile': profile}
+    context = {
+        'profile': profile
+    }
     return render(request, 'users/profile.html', context)
 
 
 @login_required(login_url='login')
 def editProfile(request):
     profile = request.user.profile
+    profile_username = request.user.username
     form = ProfileForm(instance=profile)
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
+        try:
+            username = request.POST['username'].lower()
+            user = User.objects.get(username=username)
+        except:
+            user = request.user.profile
+        user_username = user.username
+        
         if form.is_valid():
-            form.save()
+            if profile_username != user_username:
+                messages.error(request, registerErrorUsername)
+            else:
+                form.save()
 
-            return redirect('profile', pk=profile.id)
+                return redirect('profile', pk=profile.id)
 
     context = {
         'form': form
@@ -79,9 +96,16 @@ def userRegister(request):
             login(request, user)
             return redirect('edit-profile')
         else:
-            messages.error(request, registerError)
+            try:
+                username = request.POST['username'].lower()
+                use = User.objects.get(username=username)
+                messages.error(request, registerErrorUsername)
+            except:
+                messages.error(request, registerError)
 
-    context = {'form': form}
+    context = {
+        'form': form
+    }
 
     return render(request,'users/register.html', context)
 
