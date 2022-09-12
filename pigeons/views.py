@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Pigeon
 from .forms import PigeonForm
-from .utils import searchPigeons, paginatePigeons
+from .utils import searchPigeons, paginatePigeons, pigeonParents
 
 from django.http import FileResponse
 import io
@@ -48,8 +48,8 @@ def updatePigeon(request, pk):
         form = PigeonForm(request.POST, request.FILES, instance=pigeon)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Udało się edytować gołębia!')
-            return redirect('user-pigeons')
+            messages.success(request, 'Udało się edytować gołębia o numerze ' + "'" + pigeon.number + "'!")
+            return redirect('pigeon', pk=pigeon.id)
 
     context = {'form': form, 'type': 1}
     return render(request, 'pigeons/pigeon-form.html', context)
@@ -79,7 +79,40 @@ def userPigeons(request):
 
 def pigeonLineage(request, pk):
     pigeon = Pigeon.objects.get(id=pk)
-    context = {'pigeon': pigeon}
+
+    parents = pigeonParents([pigeon])
+    grandparents = pigeonParents(pigeonParents([pigeon]))
+    greatgrandparents = pigeonParents(pigeonParents(pigeonParents([pigeon])))
+    greatgreatgrandparents = pigeonParents(pigeonParents(pigeonParents(pigeonParents([pigeon]))))
+
+    generation_list = []
+    generation_list.extend(parents)
+    generation_list.extend(grandparents)
+    generation_list.extend(greatgrandparents)
+    generation_list.extend(greatgreatgrandparents)
+
+    generation_list_colors = []
+
+    color = 1
+
+    for i in list(set(generation_list)):
+        if generation_list.count(i) == 1 or i == None:
+            generation_list_colors.extend([[i, 0]])
+        else:
+            generation_list_colors.extend([[i, color]])
+            color += 1
+
+    print(generation_list_colors)
+
+    context = {
+        'pigeon': pigeon,
+        'parents': parents,
+        'grandparents': grandparents,
+        'greatgrandparents': greatgrandparents,
+        'greatgreatgrandparents': greatgreatgrandparents,
+        'generation_list_colors': generation_list_colors
+    }
+
     return render(request, 'pigeons/pigeon-lineage.html', context)
 
 
@@ -97,7 +130,17 @@ def deletePigeon(request, pk):
 def pigeon(request, pk):
     pigeon = Pigeon.objects.get(id=pk)
 
-    context = {'pigeon': pigeon}
+    children = Pigeon.objects.distinct().filter(
+        Q(mother=pigeon) |
+        Q(father=pigeon)
+    )
+    results = None
+
+    context = {
+        'pigeon': pigeon,
+        'children': children,
+        'results': results,
+    }
     return render(request, 'pigeons/pigeon.html', context)
 
 

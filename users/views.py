@@ -5,7 +5,6 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Profile, Message
 from .forms import RegisterUserForm, ProfileForm, MessageForm, ChangePasswordForm
-from .alerts import *
 from .utils import searchProfiles, paginateProfiles
 
 # Create your views here.
@@ -37,20 +36,22 @@ def editProfile(request):
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
-        try:
-            username = request.POST['username'].lower()
-            user = User.objects.get(username=username)
-        except:
-            user = request.user.profile
-        user_username = user.username
-        
-        if form.is_valid():
-            if profile_username != user_username:
-                messages.error(request, registerErrorUsername)
-            else:
-                form.save()
+        if request.POST['username'].lower() != request.user.username and User.objects.filter(username=request.POST['username'].lower()):
+            messages.error(request, 'Taka nazwa użytkownika jest już zajęta.')
+        else:
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.username = user.username.lower()
+                user.save()
+
+                messages.success(request, 'Konto zostało edytowane!')
 
                 return redirect('profile', pk=profile.id)
+            else:
+                if request.POST['email'] != request.user.email and User.objects.filter(email=request.POST['email']):
+                    messages.error(request, 'Taki email jest już zajęty.')
+                else:
+                    messages.error(request, 'Nie udało się edytować konta!')
 
     context = {
         'form': form
@@ -70,10 +71,10 @@ def userLogin(request):
 
         if user is not None:
             login(request, user)
-            messages.success(request, loginSuccess)
+            messages.success(request, 'Witaj ' + user.first_name + ' ' + user.last_name + '! Udało się zalogować.')
             return redirect(request.GET['next'] if 'next' in request.GET else 'posts')
         else:
-            messages.error(request, loginError)
+            messages.error(request, 'Login lub hasło jest nieprawidłowe!')
 
     return render(request,'users/login.html')
 
@@ -86,22 +87,26 @@ def userRegister(request):
 
     if request.method == "POST":
         form = RegisterUserForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-
-            messages.success(request, registerSuccess)
-
-            login(request, user)
-            return redirect('edit-profile')
+        if User.objects.filter(username=request.POST['username'].lower()):
+            messages.error(request, 'Taka nazwa użytkownika jest już zajęta.')
         else:
-            try:
-                username = request.POST['username'].lower()
-                use = User.objects.get(username=username)
-                messages.error(request, registerErrorUsername)
-            except:
-                messages.error(request, registerError)
+            if form.is_valid():
+                if User.objects.filter(email=request.POST['email']):
+                    messages.error(request, 'Taki email jest już zajęty.')
+                else:
+                    user = form.save(commit=False)
+                    user.username = user.username.lower()
+                    user.save()
+
+                    messages.success(request, 'Konto zostało utworzone!')
+
+                    login(request, user)
+                    return redirect('edit-profile')
+            else:
+                if request.POST['password1'] != request.POST['password2']:
+                    messages.error(request, 'Podane hasła nie są takie same.')
+                else:
+                    messages.error(request, 'Nie udało się utworzyć nowego konta!')
 
     context = {
         'form': form
@@ -118,8 +123,9 @@ def userLogoutPage(request):
 @login_required(login_url='login')
 def userLogout(request):
     logout(request)
-    messages.success(request, logoutSuccess)
-    return redirect('login')
+    messages.success(request, 'Użytkownik został wylogowany.')
+    return redirect(request.GET['next'] if 'next' in request.GET else 'login')
+    # return redirect('login')
 
 
 @login_required(login_url='login')
@@ -185,10 +191,10 @@ def changePassword(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, changePasswordSuccess)
+            messages.success(request, 'Twoje hasło zostało zmienione poprawnie!')
             return redirect('change-password')
         else:
-            messages.error(request, changePasswordError)
+            messages.error(request, 'Nie udało się zmienić hasła.')
     else:
         form = ChangePasswordForm(request.user)
 

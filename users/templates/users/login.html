@@ -1,6 +1,6 @@
 {% extends 'main.html' %}
-
 {% block content %}
+
 <div class="container p-5" style="width: 30rem;">
   <div class="jumbotron mb-0">
     <form action="" method="POST">
@@ -9,24 +9,6 @@
       <div class="mb-5 text-center">
         <h2>Logowanie</h2>
       </div>
-
-      <div class="text-center mb-3">
-        <p>Zaloguj się przez:</p>
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="bi bi-facebook"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="bi bi-google"></i>
-        </button>
-
-        <button type="button" class="btn btn-link btn-floating mx-1">
-          <i class="bi bi-twitter"></i>
-        </button>
-      </div>
-
-      <p class="text-center">lub:</p>
-
 
       <div class="mb-3">
         <label class="form-label">Login</label>
@@ -37,22 +19,13 @@
         <input type="password" name="password" placeholder='Hasło' class="form-control">
       </div>
       <div class="text-center mb-3">
-        <!-- <div class="col-md-6 d-flex justify-content-center">
-          <div class="form-check mb-3 mb-md-0">
-            <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked="">
-            <label class="form-check-label" for="loginCheck"> Zapamiętaj mnie </label>
-          </div>
-        </div> -->
-
-        <!-- <div class="col-md-6 d-flex justify-content-center"> -->
           <a href="#!">Zapomniałeś hasła?</a>
-        <!-- </div> -->
       </div>
 
       <button type="submit" class="btn btn-primary btn-block mb-3">Zaloguj się</button>
     </form>
 
-    <div class="text-center mb-5">
+    <div class="text-center">
       <p>Nie masz konta? <a href="{% url 'register' %}">Zarejestruj się</a></p>
     </div>
   </div>

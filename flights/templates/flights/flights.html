@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+{% block content %}
+
+{% if flights %}
+<div class="card card-body">
+  <table class="table table-sm">
+    <tbody>
+      <tr>
+        <th>Miejsce startu</th>
+        <th>Data</th>
+        <th>Typ lotu</th>
+        <th>Okręg</th>
+        <th>Oddział</th>
+        <th>Liczba gołębi</th>
+        <th>Wyniki</th>
+      </tr>
+
+      {% for flight in flights %}
+      <tr>
+        <td>{{flight.take_off_place}}</td>
+        <td>{{flight.take_off_date|date:'d-m-Y'}}</td>
+        {% if flight.category == 'B' %}
+        <td>oddziałowy</td>
+        <td>{{flight.branch.district}}</td>
+        <td>{{flight.branch}}</td>
+        {% elif flight.category == 'D' %}
+        <td>okręgowy</td>
+        <td>{{flight.district}}</td>
+        <td>-</td>
+        {% endif %}
+        <td>{{flight.pigeons_amount}}</td>
+        <td><a class="btn btn-sm btn-secondary" href="{% url 'flight-results' flight.id %}">Wyniki</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% endblock content %}

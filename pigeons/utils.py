@@ -48,3 +48,21 @@ def paginatePigeons(request, pigeons, results):
 
     custom_rage = range(leftIndex, rightIndex)
     return custom_rage, pigeons
+
+
+def pigeonParents(pigeons):
+    return_list = []
+    for pigeon in pigeons:
+        if pigeon:
+            if pigeon.mother:
+                return_list.extend([Pigeon.objects.get(id=pigeon.mother.id)])
+            else:
+                return_list.extend([None])
+            if pigeon.father:
+                return_list.extend([Pigeon.objects.get(id=pigeon.father.id)])
+            else:
+                return_list.extend([None])
+        else:
+            return_list.extend([None, None])
+
+    return return_list

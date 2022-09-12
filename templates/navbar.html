@@ -19,7 +19,7 @@
         </li>
         {% if request.user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-item nav-link" href="#">Wyniki lotów</a>
+          <a class="nav-item nav-link" href="{% url 'flights' %}">Loty</a>
         </li>
         {% endif %}
       </ul>
@@ -51,10 +51,14 @@
               <li><a class="dropdown-item" href="{% url 'profile' request.user.profile.id %}">Moje konto</a></li>
               <li><a class="dropdown-item" href="{% url 'user-pigeons' %}">Moje gołębie</a></li>
               <li><a class="dropdown-item" href="{% url 'user-posts' %}">Moje posty</a></li>
-              <li><hr class="dropdown-divider"></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li><a class="dropdown-item" href="{% url 'edit-profile' %}">Edytuj profil</a></li>
               <li><a class="dropdown-item" href="{% url 'change-password' %}">Zmień hasło</a></li>
-              <li><hr class="dropdown-divider"></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li><a class="dropdown-item" href="{% url 'logout-page' %}">Wyloguj mnie</a></li>
             </ul>
           </li>

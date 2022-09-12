@@ -23,7 +23,7 @@ class Pigeon(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
 
     name = models.CharField(max_length=100, null=True, blank=True)
-    birth_date = models.DateTimeField(null=True, blank=True, default=timezone.now)
+    birth_date = models.DateField(null=True, blank=True, default=timezone.now)
     mother = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name="selfMother", limit_choices_to={'gender': 'F'})
     father = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name="selfFather", limit_choices_to={'gender': 'M'})
     description = models.TextField(null=True, blank=True)

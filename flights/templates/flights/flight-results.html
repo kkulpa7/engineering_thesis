@@ -1,0 +1,7 @@
+{% extends 'main.html' %}
+{% block content %}
+<h1>wyniki {{flight.id}}</h1>
+{% for result in results %}
+<p>{{result.pigeon.number}}</p>
+{% endfor %}
+{% endblock content %}

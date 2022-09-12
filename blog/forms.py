@@ -29,6 +29,8 @@ class PostForm(ModelForm):
             field.widget.attrs.update({'placeholder': field.label})
 
         self.fields['tags'].widget.attrs.update({'data-role': 'tagsinput'})
+
+        self.fields['text'].required = True
     # self.fields['title'].widget.attrs.update({'placeholder': 'Tytuł'})
     #
     # self.fields['text'].widget.attrs.update({'class': 'form-control'})

@@ -1,8 +1,0 @@
-logoutSuccess = 'Użytkownik został wylogowany'
-registerSuccess = 'Konto zostało utworzone!'
-registerError = 'Nie udało się utworzyć nowego konta!'
-loginSuccess = 'Udało się zalogować!'
-loginError = 'Login lub hasło jest nieprawidłowe!'
-changePasswordSuccess = 'Twoje hasło zostało zmienione poprawnie!'
-changePasswordError = 'Nie udało się zmienić hasła.'
-registerErrorUsername = 'Taka nazwa użytkownika jest już zajęta.'

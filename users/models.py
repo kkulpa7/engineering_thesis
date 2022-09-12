@@ -9,10 +9,10 @@ import uuid
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    username = models.CharField(max_length=200, blank=True, null=True)
+    username = models.CharField(max_length=200, unique=True, blank=True, null=True)
     first_name = models.CharField(max_length=200, null=True, blank=True)
     last_name = models.CharField(max_length=200, null=True, blank=True)
-    email = models.EmailField(max_length=500, blank=True, null=True)
+    email = models.EmailField(max_length=500, unique=True, blank=True, null=True)
     # phone_number = PhoneNumberField(blank=True, null=True, unique=True)
     profile_image = models.ImageField(null=True, blank=True, upload_to='profiles/', default='profiles/profile-default.jpg')
     bio = models.TextField(blank=True, null=True)

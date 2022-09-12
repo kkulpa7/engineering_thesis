@@ -1,9 +1,8 @@
 {% extends 'main.html' %}
 {% block content %}
-<div class="text-center mb-4"></div>
 
-<div class="container">
-  <div class="jumbotron">
+<div class="container p-5">
+  <div class="jumbotron mb-0">
     <div class="text-center mb-4">
       <h2>Numer obrączki: {{pigeon.number}}</h2>
     </div>
@@ -30,9 +29,56 @@
         </div>
       </div>
       {% endif %}
+
+    </div>
+    <h5 class="mt-3 text-center">Szczegóły</h5>
+    <p class="mb-0"><b>Barwa:</b> {{pigeon.color}}</p>
+    <p class="mb-0">
+      <b>Płeć:</b>
+      {% if pigeon.gender == 'F' %}
+      samica
+      {% elif pigeon.gender == 'M' %}
+      samiec
+      {% else %}
+      nieznana
+      {% endif %}
+    </p>
+    {% if pigeon.name %}
+    <p class="mb-0"><b>Nazwa:</b> {{pigeon.name}}</p>
+    {% endif %}
+    <p class="mb-0"><b>Data wyklucia:</b> {{pigeon.birth_date|date:'d-m-Y'}}</p>
+    {% if pigeon.mother %}
+    <p class="mb-0"><b>Matka:</b> <a href="{% url 'pigeon' pigeon.mother.id %}" class="link-dark">{{pigeon.mother}}</a></p>
+    {% endif %}
+    {% if pigeon.father %}
+    <p class="mb-0"><b>Ojciec:</b> <a href="{% url 'pigeon' pigeon.father.id %}" class="link-dark">{{pigeon.father}}</a></p>
+    {% endif %}
+    {% if pigeon.description %}
+    <p class="mb-0"><b>Opis:</b> {{pigeon.description}}</p>
+    {% endif %}
+
+    <h5 class="mt-3 text-center">Osiągnięcia</h5>
+    {% if results %}
+    {% for result in results %}
+    {% endfor %}
+    {% else %}
+    <p>Gołąb nie posiada żadnych osiągnięć</p>
+    {% endif %}
+    <h5 class="mt-3 text-center">Potomstwo</h5>
+    {% if children %}
+    {% for child in children %}
+    <p><a href="{% url 'pigeon' child.id %}" class="text-dark">{{child.number}}</a></p>
+    {% endfor %}
+    {% else %}
+    <p>Gołąb nie ma potomstwa</p>
+    {% endif %}
+    <div class="container mt-4 p-0">
+      <a href="{% url 'pigeon-lineage' pigeon.id %}"><button type="button" class="btn btn-sm btn-info">Rodowód</button></a>
+      <a href="{% url 'update-pigeon' pigeon.id %}"><button type="button" class="btn btn-sm btn-primary">Edytuj</button></a>
+      <a href="{% url 'delete-pigeon' pigeon.id %}"><button type="button" class="btn btn-sm btn-danger">Usuń</button></a>
     </div>
   </div>
-
-  <a class="btn btn-sm btn-danger" href="{% url 'pigeon-lineage' pigeon.id %}">Rodowód</a>
 </div>
+
+
 {% endblock %}

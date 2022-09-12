@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'pigeons.apps.PigeonsConfig',
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
-    'competitions.apps.CompetitionsConfig',
+    'flights.apps.FlightsConfig',
     'districts.apps.DistrictsConfig',
 
     'taggit',
