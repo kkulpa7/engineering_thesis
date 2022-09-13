@@ -117,11 +117,13 @@ class ProfileForm(ModelForm):
             'username',
             'first_name',
             'last_name',
+            'bio',
             'email',
             'branch',
             'street',
             'zip_code',
             'city',
+            'profile_image'
         ]
         labels = {
             'username': 'Login',
@@ -132,20 +134,26 @@ class ProfileForm(ModelForm):
             'street': 'Ulica/Miejscowość',
             'zip_code': 'Kod pocztowy',
             'city': 'Poczta',
+            'profile_image': 'Zdjęcie profilowe',
+            'bio': 'Opis'
         }
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
-            field.widget.attrs.update({'class': 'form-control'})
-            field.widget.attrs.update({'placeholder': field.label})
+            if name.find('image') != -1:
+                field.widget.attrs.update({'class': 'form-control-file'})
+            else:
+                field.widget.attrs.update({'class': 'form-control'})
+                field.widget.attrs.update({'placeholder': field.label})
 
         required_fields = [
             'username',
             'first_name',
             'last_name',
-            'email'
+            'email',
+            'profile_image'
         ]
 
         for field in required_fields:

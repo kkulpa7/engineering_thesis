@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Pigeon
+from flights.models import Result
 from .forms import PigeonForm
 from .utils import searchPigeons, paginatePigeons, pigeonParents
 
@@ -134,7 +135,9 @@ def pigeon(request, pk):
         Q(mother=pigeon) |
         Q(father=pigeon)
     )
-    results = None
+    results = Result.objects.distinct().filter(
+        Q(pigeon=pigeon)
+    )
 
     context = {
         'pigeon': pigeon,
@@ -144,24 +147,66 @@ def pigeon(request, pk):
     return render(request, 'pigeons/pigeon.html', context)
 
 
-def genertePdf(request):
+def genertePdf(request, pk):
+    pigeon = Pigeon.objects.get(id=pk)
+
+
     buf = io.BytesIO()
     c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
     textob = c.beginText()
     textob.setTextOrigin(inch,inch)
     textob.setFont("Helvetica", 14)
 
-    lines = [
-        "This is line 1",
-        "This is line 2",
-    ]
+    parents = pigeonParents([pigeon])
+    grandparents = pigeonParents(pigeonParents([pigeon]))
+    greatgrandparents = pigeonParents(pigeonParents(pigeonParents([pigeon])))
+    greatgreatgrandparents = pigeonParents(pigeonParents(pigeonParents(pigeonParents([pigeon]))))
 
-    for line in lines:
-        textob.textLine(line)
+    textob.textLine("Wlasciciel golebia")
+    textob.textLine(pigeon.owner.first_name + " " + pigeon.owner.last_name)
+
+    textob.textLine(" ")
+    textob.textLine("Rodowod golebia o numerze " + pigeon.number)
+
+    textob.textLine(" ")
+    textob.textLine("Rodzice golebia: ")
+
+    for parent in parents:
+        if parent:
+            textob.textLine(parent.number)
+        else:
+            textob.textLine("#")
+
+    textob.textLine(" ")
+    textob.textLine("Dziadkowie golebia: ")
+
+    for parent in grandparents:
+        if parent:
+            textob.textLine(parent.number)
+        else:
+            textob.textLine("#")
+
+    textob.textLine(" ")
+    textob.textLine("Pradziadkowie golebia: ")
+
+    for parent in greatgrandparents:
+        if parent:
+            textob.textLine(parent.number)
+        else:
+            textob.textLine("#")
+
+    textob.textLine(" ")
+    textob.textLine("Prapradziadkowie golebia: ")
+
+    for parent in greatgreatgrandparents:
+        if parent:
+            textob.textLine(parent.number)
+        else:
+            textob.textLine("#")
 
     c.drawText(textob)
     c.showPage()
     c.save()
     buf.seek(0)
 
-    return FileResponse(buf, as_attachment=True, filename='cos.pdf')
+    return FileResponse(buf, as_attachment=True, filename='rodowod_' + pigeon.number + '.pdf')

@@ -8,6 +8,10 @@
       <h1>{{profile.user.first_name}} {{profile.user.last_name}}</h1>
     </div>
 
+    {% if profile.bio %}
+    <h3>Opis użytkownika</h3>
+    <p>{{profile.bio}}</p>
+    {% endif %}
 
 
     {% if request.user.profile.id != profile.id %}

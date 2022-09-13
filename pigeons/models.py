@@ -36,7 +36,7 @@ class Pigeon(models.Model):
     owner = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True)
 
 
-    death_date = models.DateTimeField(null=True, blank=True)
+    death_date = models.DateField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)

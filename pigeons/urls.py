@@ -9,5 +9,5 @@ urlpatterns = [
     path('pigeon-lineage/<str:pk>/', views.pigeonLineage, name="pigeon-lineage"),
     path('delete-pigeon/<str:pk>/', views.deletePigeon, name="delete-pigeon"),
     path('pigeon/<str:pk>/', views.pigeon, name="pigeon"),
-    path('generate-pdf/', views.genertePdf, name="generate-pdf"),
+    path('generate-pdf/<str:pk>/', views.genertePdf, name="generate-pdf"),
 ]

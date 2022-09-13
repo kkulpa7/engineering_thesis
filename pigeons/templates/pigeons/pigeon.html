@@ -59,15 +59,42 @@
 
     <h5 class="mt-3 text-center">Osiągnięcia</h5>
     {% if results %}
-    {% for result in results %}
-    {% endfor %}
+    <div class="card card-body text-center">
+      <table class="table table-sm mb-0">
+        <tbody>
+          <tr>
+            <th>Miejsce</th>
+            <th>Data</th>
+            <th>Miejsce odlotu</th>
+            <th>Liczba gołębi</th>
+          </tr>
+
+          {% for result in results %}
+          <tr>
+            {% if result.place == 1 %}
+            <td><i class="bi bi-trophy-fill" style="color: #FFD700;"></i> {{result.place}}</td>
+            {% elif result.place == 2 %}
+            <td><i class="bi bi-trophy-fill" style="color: #C0C0C0;"></i> {{result.place}}</td>
+            {% elif result.place == 3 %}
+            <td><i class="bi bi-trophy-fill" style="color: #CD7F32;"></i> {{result.place}}</td>
+            {% else %}
+            <td>{{result.place}}</td>
+            {% endif %}
+            <td>{{result.flight.take_off_date|date:'d-m-Y'}}</td>
+            <td><a href="{% url 'flight-results' result.flight.id %}" class="text-dark">{{result.flight.take_off_place}}</a></td>
+            <td>{{result.flight.pigeons_amount}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
     {% else %}
     <p>Gołąb nie posiada żadnych osiągnięć</p>
     {% endif %}
     <h5 class="mt-3 text-center">Potomstwo</h5>
     {% if children %}
     {% for child in children %}
-    <p><a href="{% url 'pigeon' child.id %}" class="text-dark">{{child.number}}</a></p>
+    <p class="mb-0"><a href="{% url 'pigeon' child.id %}" class="text-dark">{{child.number}}</a></p>
     {% endfor %}
     {% else %}
     <p>Gołąb nie ma potomstwa</p>

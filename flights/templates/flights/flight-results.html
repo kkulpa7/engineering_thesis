@@ -1,7 +1,43 @@
 {% extends 'main.html' %}
 {% block content %}
-<h1>wyniki {{flight.id}}</h1>
-{% for result in results %}
-<p>{{result.pigeon.number}}</p>
-{% endfor %}
+
+<div class="container p-5 mb-0 text-center">
+  <div class="jumbotron mb-0">
+
+    <h1>Wyniki lotu</h1>
+    <h5>Miejsce odlotu: {{flight.take_off_place}}</h5>
+    <h5>Data lotu: {{flight.take_off_date|date:'d-m-Y'}}</h5>
+
+    {% if results %}
+    <div class="card card-body">
+      <table class="table table-sm mb-0">
+        <tbody>
+          <tr>
+            <th>Miejsce</th>
+            <th>Gołąb</th>
+            <th>Właściciel</th>
+          </tr>
+
+          {% for result in results %}
+          <tr>
+            {% if result.place == 1 %}
+            <td><i class="bi bi-trophy-fill" style="color: #FFD700;"></i> {{result.place}}</td>
+            {% elif result.place == 2 %}
+            <td><i class="bi bi-trophy-fill" style="color: #C0C0C0;"></i> {{result.place}}</td>
+            {% elif result.place == 3 %}
+            <td><i class="bi bi-trophy-fill" style="color: #CD7F32;"></i> {{result.place}}</td>
+            {% else %}
+            <td>{{result.place}}</td>
+            {% endif %}
+            <td><a href="{% url 'pigeon' result.pigeon.id %}" class="text-dark">{{result.pigeon.number}}</a></td>
+            <td><a href="{% url 'profile' result.pigeon.owner.id %}" class="text-dark">{{result.pigeon.owner.first_name}} {{result.pigeon.owner.last_name}}</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
 {% endblock content %}

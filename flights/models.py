@@ -12,7 +12,6 @@ class Flight(models.Model):
 
     category = models.CharField(max_length=1, choices=CATEGORY_CHOICES, null=True, blank=True)
     take_off_place = models.CharField(max_length=300, null=True, blank=True)
-    # take_off_date = models.DateTimeField(null=True, blank=True)
     take_off_date = models.DateField(null=True, blank=True)
     pigeons_amount = models.IntegerField(null=True, blank=True)
     district = models.ForeignKey(District, on_delete=models.CASCADE, null=True, blank=True)
@@ -31,3 +30,7 @@ class Result(models.Model):
     flight = models.ForeignKey('Flight', on_delete=models.CASCADE, null=True)
     place = models.IntegerField()
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+
+    class Meta:
+        ordering = ['-flight', 'place']
+        unique_together = [['pigeon', 'flight'], ['place', 'flight']]
