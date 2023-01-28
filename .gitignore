@@ -1,6 +1,5 @@
 */__pycache__/
-*/migrations/__pycache__/*
-*/migrations/00*.py
+*/migrations/*
 static/images/pigeons/*
 static/images/profiles/*
 users/migrations/*
