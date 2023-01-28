@@ -1,7 +1,6 @@
 */__pycache__/
 */migrations/*
-static/images/pigeons/*
-static/images/profiles/*
+static/images/*
 users/migrations/*
 pigeons/migrations/*
 .metadata/*
