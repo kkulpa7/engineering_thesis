@@ -3,6 +3,7 @@
 */migrations/00*.py
 static/images/pigeons/*
 static/images/profiles/*
+users/migrations/*
 
 
 # Django #
