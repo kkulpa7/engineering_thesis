@@ -5,7 +5,7 @@ from django.contrib import messages
 from .models import Pigeon
 from flights.models import Result
 from .forms import PigeonForm
-from .utils import searchPigeons, paginatePigeons, pigeonParents
+from .utils import searchPigeons, paginatePigeons, pigeonParents, predict_result
 
 from django.http import FileResponse
 import io
@@ -139,10 +139,13 @@ def pigeon(request, pk):
         Q(pigeon=pigeon)
     )
 
+    prediction = predict_result(pigeon)
+
     context = {
         'pigeon': pigeon,
         'children': children,
         'results': results,
+        'prediction': prediction,
     }
     return render(request, 'pigeons/pigeon.html', context)
 

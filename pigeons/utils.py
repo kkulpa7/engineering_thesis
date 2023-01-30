@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Pigeon
+from predictions.predictor_interface import PredictorInterface
 
 
 def searchPigeons(request, user=False):
@@ -70,3 +71,9 @@ def pigeonParents(pigeons):
             return_list.extend([None, None])
 
     return return_list
+
+
+def predict_result(pigeon):
+    pigeon_results = list(pigeon.result_set.values_list("place", flat=True))
+    interface = PredictorInterface('results_model.pth')
+    return interface.predict(pigeon_results)
