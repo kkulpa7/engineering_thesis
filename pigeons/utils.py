@@ -76,4 +76,7 @@ def pigeonParents(pigeons):
 def predict_result(pigeon):
     pigeon_results = list(pigeon.result_set.values_list("place", flat=True))
     interface = PredictorInterface('results_model.pth')
-    return interface.predict(pigeon_results)
+    if len(pigeon_results) < 3:
+        return 0
+    else:
+        return interface.predict(pigeon_results)
